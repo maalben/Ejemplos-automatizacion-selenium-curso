@@ -1,18 +1,20 @@
 package automationtesting.myaccount;
 
+import static automationtesting.utils.Utilidades.typeInField;
+import static automationtesting.utils.Utilidades.waitOwn;
 import org.junit.After;
-
-import static java.lang.Thread.sleep;
 import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class TestRegistro {
 
     public static WebDriver driver;
-    private final String email = "automatizacioncursos6@gmail.com";
+    private final String email = "automatizacioncursos7@gmail.com";
     private final String email2 = "automatizacioncursos2@gmail.com";
     private final String password = "Pp123456Prueba++P";
 
@@ -39,12 +41,12 @@ public class TestRegistro {
 
     private void diligenciarEmail(String correo) {
         final WebElement emailField = driver.findElement(By.id("reg_email"));
-        TypeInField(emailField, correo);
+        typeInField(emailField, correo);
     }
 
         private void diligenciarPassword() {
         final WebElement passwordField = driver.findElement(By.id("reg_password"));
-        TypeInField(passwordField, this.getPassword());
+        typeInField(passwordField, this.getPassword());
     }
 
     @Test
@@ -66,14 +68,14 @@ public class TestRegistro {
 
     @Test
     public void validarCorreoExistente(){
+        WebDriverWait wait = new WebDriverWait(driver, 30);
         startPage();
         diligenciarEmail(this.email2);
         diligenciarPassword();
         final WebElement registerButton = driver.findElement(By.name("register"));
-        waitOwn(6);
+        wait.until(ExpectedConditions.elementToBeClickable(registerButton));
         registerButton.click();
-        waitOwn(6);
-
+        wait.until(ExpectedConditions.textToBe(By.xpath("//ul[@class='woocommerce-error']/li"), "Error: An account is already registered with your email address. Please login."));
         String expectedValue = "Error: An account is already registered with your email address. Please login.";
         WebElement labelResult = driver.findElement(By.xpath("//ul[@class='woocommerce-error']/li"));
         assertEquals(expectedValue, labelResult.getText());
@@ -97,27 +99,6 @@ public class TestRegistro {
     @After
     public void close(){
         driver.quit();
-    }
-
-
-    public void TypeInField(WebElement field, String value){
-        field.click();
-        field.clear();
-        for (int i = 0; i < value.length(); i++){
-            char c = value.charAt(i);
-            String s = new StringBuilder().append(c).toString();
-            field.sendKeys(s);
-            waitOwn(1);
-        }
-    }
-
-    public void waitOwn(int segundos){
-        long time = segundos * 100;
-        try {
-            sleep(time);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
     }
 
 }
