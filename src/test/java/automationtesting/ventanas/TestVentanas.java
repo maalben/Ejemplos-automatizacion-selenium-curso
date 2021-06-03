@@ -10,11 +10,11 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import static automationtesting.utils.Utilidades.clickElement;
 
@@ -23,26 +23,26 @@ public class TestVentanas {
     public static WebDriver driver;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         System.setProperty("webdriver.chrome.driver", "src/test/resources/drivers/chromedriver");
         driver = new ChromeDriver();
     }
 
-    public void startPage(){
+    public void startPage() {
         driver.manage().window().maximize();
         driver.get("http://demo.automationtesting.in/Windows.html");
     }
 
 
     @Test
-    public void prueba1Ventana(){
+    public void prueba1Ventana() {
         WebDriverWait wait = new WebDriverWait(driver, 30);
         startPage();
         String ventanaInicial = driver.getWindowHandle();
         Utilidades.clickElement(driver, "btn-info", "className");
 
-        for(String manejadorVentanas : driver.getWindowHandles()){
-            if(!ventanaInicial.contentEquals(manejadorVentanas)){
+        for (String manejadorVentanas : driver.getWindowHandles()) {
+            if (!ventanaInicial.contentEquals(manejadorVentanas)) {
                 driver.switchTo().window(manejadorVentanas);
                 break;
             }
@@ -59,20 +59,20 @@ public class TestVentanas {
 
 
     @Test
-    public void prueba2Ventana(){
+    public void prueba2Ventana() {
         WebDriverWait wait = new WebDriverWait(driver, 30);
         JavascriptExecutor js = (JavascriptExecutor) driver;
 
         startPage();
         String ventanaInicial = driver.getWindowHandle();
-        System.out.println("ID ventana inicial: "+ ventanaInicial);
+        System.out.println("ID ventana inicial: " + ventanaInicial);
         System.out.println("Titulo de la ventana inicial: " + driver.getTitle());
 
         clickElement(driver, "//a[@href='#Seperate']", "xpath");
         Utilidades.clickElement(driver, "btn-primary", "className");
 
-        for(String manejadorVentanas : driver.getWindowHandles()){
-            if(!ventanaInicial.contentEquals(manejadorVentanas)){
+        for (String manejadorVentanas : driver.getWindowHandles()) {
+            if (!ventanaInicial.contentEquals(manejadorVentanas)) {
                 driver.switchTo().window(manejadorVentanas);
                 break;
             }
@@ -85,12 +85,12 @@ public class TestVentanas {
 
         List<WebElement> contenedorCursos =
                 driver.findElement(By.className("getting-started-topic-container")).findElements(By.tagName("h3"));
-        List<String> list=new ArrayList();
-        for(int i=0; i<contenedorCursos.size();i++){
+        List<String> list = new ArrayList();
+        for (int i = 0; i < contenedorCursos.size(); i++) {
             list.add(contenedorCursos.get(i).getText());
         }
 
-        List<String> cursosEsperados=new ArrayList();
+        List<String> cursosEsperados = new ArrayList();
         cursosEsperados.add("Selenium Grid");
         cursosEsperados.add("Selenium IDE");
         cursosEsperados.add("Selenium WebDriver");
@@ -110,7 +110,7 @@ public class TestVentanas {
 
 
     @Test
-    public void prueba3Ventana(){
+    public void prueba3Ventana() {
         WebDriverWait wait = new WebDriverWait(driver, 30);
         JavascriptExecutor js = (JavascriptExecutor) driver;
         startPage();
@@ -122,7 +122,7 @@ public class TestVentanas {
         driver.findElement(By.cssSelector("#Multiple>button")).click();
 
         List<String> ventanas = new ArrayList<>();
-        for(String manejadorVentanas : driver.getWindowHandles()){
+        for (String manejadorVentanas : driver.getWindowHandles()) {
             ventanas.add(manejadorVentanas);
         }
 
@@ -130,20 +130,20 @@ public class TestVentanas {
 
         //Se ubica en la tercera ventana
         driver.switchTo().window(ventanas.get(1));
-        System.out.println("ID de la ventana: "+ ventanas.get(1));
-        System.out.println("Titulo "+ driver.getTitle());
+        System.out.println("ID de la ventana: " + ventanas.get(1));
+        System.out.println("Titulo " + driver.getTitle());
         Utilidades.waitOwn(100);
 
         js.executeScript("window.scrollBy(0, 300)");
 
         List<WebElement> contenedorCursos =
                 driver.findElement(By.className("getting-started-topic-container")).findElements(By.tagName("h3"));
-        List<String> list=new ArrayList();
-        for(int i=0; i<contenedorCursos.size();i++){
+        List<String> list = new ArrayList();
+        for (int i = 0; i < contenedorCursos.size(); i++) {
             list.add(contenedorCursos.get(i).getText());
         }
 
-        List<String> cursosEsperados=new ArrayList();
+        List<String> cursosEsperados = new ArrayList();
         cursosEsperados.add("Selenium Grid");
         cursosEsperados.add("Selenium IDE");
         cursosEsperados.add("Selenium WebDriver");
@@ -156,7 +156,7 @@ public class TestVentanas {
 
         driver.switchTo().window(ventanas.get(2)); //ventana demo automation
         System.out.println("ID De la ventana: " + ventanas.get(2));
-        System.out.println("Titulo "+ driver.getTitle());
+        System.out.println("Titulo " + driver.getTitle());
 
 
         Utilidades.typeInField(driver.findElement(By.id("email")), "prueba@correo.com");
@@ -171,7 +171,7 @@ public class TestVentanas {
 
         driver.switchTo().window(ventanas.get(0)); //ventana principal
         System.out.println("ID De la ventana: " + ventanas.get(0));
-        System.out.println("Titulo "+ driver.getTitle());
+        System.out.println("Titulo " + driver.getTitle());
         String expectedMessageMainWindow = "Click the button to open multiple windows";
         String messageLocatorMainWindow = driver.findElement(By.cssSelector("#Multiple>p")).getText();
 
@@ -183,7 +183,7 @@ public class TestVentanas {
 
 
     @After
-    public void close(){
+    public void close() {
         driver.quit();
     }
 

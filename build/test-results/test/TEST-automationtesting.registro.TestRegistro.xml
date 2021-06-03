@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="automationtesting.registro.TestRegistro" tests="1" skipped="0" failures="0" errors="0" timestamp="2021-06-03T02:56:13" hostname="MacBook-Pro-de-Mario.local" time="13.317">
+  <properties/>
+  <testcase name="testRegisterSuccesful" classname="automationtesting.registro.TestRegistro" time="13.317"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[Starting ChromeDriver 90.0.4430.24 (4c6d850f087da467d926e8eddb76550aed655991-refs/branch-heads/4430@{#429}) on port 45614
+Only local connections are allowed.
+Please see https://chromedriver.chromium.org/security-considerations for suggestions on keeping ChromeDriver safe.
+ChromeDriver was started successfully.
+Jun 02, 2021 9:56:15 PM org.openqa.selenium.remote.ProtocolHandshake createSession
+INFO: Detected dialect: W3C
+]]></system-err>
+</testsuite>
